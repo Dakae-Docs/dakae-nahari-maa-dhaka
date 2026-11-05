@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>إدارة حصص مركز ذكاء</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Reem+Kufi:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <span class="brand"><span><b>إدارة الحصص</b><small>مركز ذكاء · صفحة خاصة بالمشرفين</small></span></span>
+    <span style="margin-inline-start:auto"></span>
+    <a class="btn" href="../">عرض الموقع العام</a>
+    <button class="btn hidden" id="logout" type="button">تسجيل الخروج</button>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="login" id="login">
+    <div class="card">
+      <h2>الدخول إلى الإدارة</h2>
+      <p class="sub">يحتاج المشرف إلى مفتاح وصول من GitHub. بدونه لا يستطيع أحد تعديل الحصص.</p>
+      <ol class="steps">
+        <li>افتح <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">صفحة إنشاء مفتاح الوصول</a> وسجّل الدخول بحسابك.</li>
+        <li>اختر <b>Only select repositories</b> ثم هذا المستودع فقط.</li>
+        <li>في <b>Permissions → Repository permissions</b> اجعل <b>Contents</b> على <b>Read and write</b>.</li>
+        <li>أنشئ المفتاح، انسخه، والصقه هنا.</li>
+      </ol>
+      <form class="form" id="loginForm" autocomplete="off">
+        <label>حساب GitHub (المالك)<input id="lOwner" type="text" required placeholder="اسم الحساب"></label>
+        <label>اسم المستودع<input id="lRepo" type="text" required placeholder="اسم المستودع"></label>
+        <label class="wide">مفتاح الوصول<input id="lToken" type="password" required placeholder="github_pat_…" autocomplete="off"></label>
+        <div class="row-actions wide" style="margin:0">
+          <button class="btn primary" type="submit">دخول</button>
+        </div>
+        <div class="status wide" id="lStatus" role="status"></div>
+      </form>
+      <p class="sub" style="margin-top:12px">يُحفظ المفتاح في هذا المتصفح فقط، ولا يُرسل إلا إلى GitHub. على جهاز مشترك اضغط «تسجيل الخروج» بعد الانتهاء.</p>
+    </div>
+  </section>
+
+  <section id="editor" class="hidden" style="padding-top:20px">
+    <div class="bar">
+      <button class="btn primary" id="publish" type="button" disabled>نشر التغييرات</button>
+      <span class="status" id="aStatus" role="status">لا توجد تغييرات.</span>
+      <button class="btn danger" id="clearDemo" type="button">حذف الحصص التجريبية</button>
+    </div>
+
+    <div class="card">
+      <h2 id="formTitle">إضافة حصة</h2>
+      <p class="sub">عدّل ما تشاء ثم اضغط «نشر التغييرات». يظهر التحديث للزوار خلال دقائق قليلة.</p>
+      <form class="form" id="form" autocomplete="off">
+        <label>الطور<select id="fPhase"></select></label>
+        <label>السنة<select id="fYear"></select></label>
+        <label>اليوم<select id="fDay"></select></label>
+        <label>القاعة<input id="fRoom" type="text" maxlength="30" placeholder="القاعة 1"></label>
+        <label>من<input id="fStart" type="time" value="16:00" required></label>
+        <label>إلى<input id="fEnd" type="time" value="17:30" required></label>
+        <label class="wide">المادة<input id="fSub" type="text" maxlength="60" list="subjects" placeholder="الرياضيات" required></label>
+        <label class="wide">ملاحظة (اختيارية)<input id="fNote" type="text" maxlength="80" placeholder="مثال: أحضر آلة حاسبة"></label>
+        <div class="row-actions wide" style="margin:0">
+          <button class="btn primary" id="fSubmit" type="submit">إضافة الحصة</button>
+          <button class="btn hidden" id="fCancel" type="button">إلغاء التعديل</button>
+        </div>
+        <div class="warn wide" id="fWarn" role="status"></div>
+      </form>
+      <datalist id="subjects"><option value="الرياضيات"><option value="اللغة العربية"><option value="اللغة الفرنسية"><option value="اللغة الإنجليزية"><option value="الفيزياء"><option value="علوم الطبيعة والحياة"><option value="الإعلام الآلي"></datalist>
+    </div>
+
+    <div class="card">
+      <h2>حصص المستوى المختار</h2>
+      <ul class="list admin-list" id="aList" style="margin-top:14px"></ul>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast" role="status"></div>
+<script src="../common.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>
