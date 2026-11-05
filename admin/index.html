@@ -13,7 +13,7 @@
 <body>
 <header class="top">
   <div class="wrap">
-    <span class="brand"><span><b>إدارة الحصص</b><small>مركز ذكاء · صفحة خاصة بالمشرفين</small></span></span>
+    <span class="brand"><span><b>إدارة الحصص</b><small>مركز ذكاء · صفحة خاصة بالمشرفين · الحصص والنصائح والإعلان وبيانات المركز</small></span></span>
     <span style="margin-inline-start:auto"></span>
     <a class="btn" href="../">عرض الموقع العام</a>
     <button class="btn hidden" id="logout" type="button">تسجيل الخروج</button>
@@ -76,6 +76,25 @@
     <div class="card">
       <h2>حصص المستوى المختار</h2>
       <ul class="list admin-list" id="aList" style="margin-top:14px"></ul>
+    </div>
+
+    <div class="card">
+      <h2>محتوى الصفحة</h2>
+      <p class="sub">الإعلان وبيانات المركز والنصائح. تُنشر مع الحصص بزر «نشر التغييرات».</p>
+      <div class="form" id="siteForm">
+        <label class="wide">إعلان المركز (يظهر في شريط أعلى الصفحة، اتركه فارغًا لإخفائه)<input id="sNotice" type="text" maxlength="300"></label>
+        <label class="wide">اسم المركز<input id="sName" type="text" maxlength="120"></label>
+        <label class="wide">العنوان<input id="sAddr" type="text" maxlength="200"></label>
+        <label>الهاتف<input id="sPhone" type="text" maxlength="40" placeholder="05 00 00 00 00"></label>
+        <label>الشعار (سطران، افصل بسطر جديد)<input id="sMotto" type="text" maxlength="80" placeholder="نتعلّم. | نبدع. نتميّز."></label>
+      </div>
+      <h3 style="margin:20px 0 6px;font-family:var(--display)">النصائح</h3>
+      <ul class="list" id="tipList"></ul>
+      <div class="form" id="tipForm" style="margin-top:12px">
+        <label class="wide">عنوان النصيحة<input id="tTitle" type="text" maxlength="80"></label>
+        <label class="wide">نص النصيحة<input id="tText" type="text" maxlength="400"></label>
+        <div class="row-actions wide" style="margin:0"><button class="btn" id="tAdd" type="button">إضافة نصيحة</button></div>
+      </div>
     </div>
   </section>
 </main>

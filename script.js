@@ -179,12 +179,31 @@ try{var cs=JSON.parse(lsGet('dakae.check.'+TODAY)||'{}');[].forEach.call(checks,
 $('#doneMsg').textContent=allChecked()?'ممتاز! أنتم جاهزون ✓':'';
 
 /* ---------- render & load ---------- */
+var SITE={notice:''};
 function renderMeta(){
-  $('#notice').classList.toggle('on',demo());
+  var msg=demo()?'هذه حصص تجريبية للتعرّف على الصفحة. سينشر المركز برنامجه المعتمد هنا قريبًا.':(SITE.notice||'');
+  $('#noticeText').textContent=msg;
+  $('#notice').classList.toggle('on',!!msg);
   $('#updated').textContent=st.updatedAt?('آخر تحديث: '+st.updatedAt.toLocaleString('ar-DZ',{timeZone:'Africa/Algiers',dateStyle:'short',timeStyle:'short'})):'';
 }
 function renderAll(){renderLevel();renderNext();renderWeek();renderDay();renderMeta()}
 renderAll();renderTip();
+
+function applySite(d){
+  if(!d||typeof d!=='object')return;
+  var str=function(v,n){return typeof v==='string'?v.slice(0,n):''};
+  SITE.notice=str(d.notice,300);
+  if(d.centerName)$('#cname').textContent=str(d.centerName,120);
+  if(d.address)$('#addr').textContent=str(d.address,200);
+  var ph=str(d.phone,40);$('#phone').hidden=!ph;$('#phone').textContent=ph?('الهاتف: '+ph):'';
+  if(d.motto){var m=$('#motto');m.textContent='';str(d.motto,80).split('\n').forEach(function(l,i){if(i)m.appendChild(document.createElement('br'));m.appendChild(document.createTextNode(l))})}
+  if(Array.isArray(d.tips)){
+    var t=d.tips.filter(function(x){return Array.isArray(x)&&typeof x[0]==='string'&&typeof x[1]==='string'&&x[0]}).slice(0,20).map(function(x){return [x[0].slice(0,80),x[1].slice(0,400)]});
+    if(t.length){TIPS=t;tipI=((TODAY%TIPS.length)+TIPS.length)%TIPS.length;renderTip()}
+  }
+  renderMeta();
+}
+fetch('data/site.json?v='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(applySite).catch(function(){});
 
 fetch('data/schedule.json?v='+Date.now(),{cache:'no-store'})
   .then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})
